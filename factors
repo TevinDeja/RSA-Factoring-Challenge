@@ -1,25 +1,27 @@
 #!/usr/bin/python3
+import sys
 
-import math
+def factorize(n):
+    """Find and return factors of n"""
+    for j in range(2, int(n**0.5+1)):
+        if n % j == 0:
+            return j, n // j
+    return None, None
 
-def factors(file):
-    with open(file, 'r') as f:
+def main(file_input):
+    """Main function to read file and print factorizations"""
+    with open(file_input, 'r') as f:
         for line in f:
-            n = int(line.strip())
-            p, q = prime_factorization(n)
-            print(f"n={p}*{q}")
+            n = int(line)
 
-def prime_factorization(n):
-    if n % 2 == 0:
-        return 2, n // 2
-
-    sqrt_n = math.isqrt(n)
-    for i in range(3, sqrt_n + 1, 2):
-        if n % i == 0:
-            return i, n // i
-
-    return n, 1
+            p, q = factorize(n)
+            if p is not None and q is not None:
+                print(f"{n}={p}*{q}")
 
 if __name__ == "__main__":
-    import sys
-    factors(sys.argv[1])
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        sys.exit(1)
+
+    file_input = sys.argv[1]
+    main(file_input)
