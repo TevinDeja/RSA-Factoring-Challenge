@@ -1,29 +1,25 @@
-#include <stdio.h>
-#include <stdlib.h>
+#!/usr/bin/python3
 
-int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: factors <file>\n"); 
-        return 1;
-    }
+import math
 
-    char *filename = argv[1];
-    FILE *fp = fopen(filename, "r");
-    if (!fp) {
-        printf("Error opening file\n");
-        return 1;
-    }
+def factors(file):
+    with open(file, 'r') as f:
+        for line in f:
+            n = int(line.strip())
+            p, q = prime_factorization(n)
+            print(f"n={p}*{q}")
 
-    int n;
-    while (fscanf(fp, "%d", &n) == 1) {
-        for (int i = 2; i <= n/2; i++) {
-            if (n % i == 0) {
-                printf("%d=%d*%d\n", n, i, n/i);
-                break;
-            } 
-        }
-    }
+def prime_factorization(n):
+    if n % 2 == 0:
+        return 2, n // 2
 
-    fclose(fp);
-    return 0;
-}
+    sqrt_n = math.isqrt(n)
+    for i in range(3, sqrt_n + 1, 2):
+        if n % i == 0:
+            return i, n // i
+
+    return n, 1
+
+if __name__ == "__main__":
+    import sys
+    factors(sys.argv[1])
