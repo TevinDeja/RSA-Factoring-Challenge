@@ -1,22 +1,23 @@
 #!/usr/bin/python3
+
 import sys
 
+
 def factorize(n):
-    """Find and return factors of n"""
-    for j in range(2, int(n**0.5+1)):
-        if n % j == 0:
-            return j, n // j
+    for m in range(2, n):
+        if n % m == 0:
+            return m, n // m
     return None, None
 
-def main(file_input):
-    """Main function to read file and print factorizations"""
-    with open(file_input, 'r') as f:
-        for line in f:
-            n = int(line)
 
+def main(file_input):
+    with open(file_input, 'r') as file:
+        for line in file:
+            n = int(line)
             p, q = factorize(n)
             if p is not None and q is not None:
                 print(f"{n}={p}*{q}")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
